@@ -1,0 +1,13 @@
+{
+    "name": "SalesforceExport",
+    "manifest_version": 2,
+    "version": "1.0.0",
+    "content_scripts": [
+        {
+            "matches": [
+                "http://localhost:8000/*"
+            ],
+            "js": ["script.js"]
+        }
+    ]
+}
