@@ -1,12 +1,13 @@
 {
     "name": "SalesforceExport",
     "manifest_version": 2,
-    "version": "1.0.0",
+    "version": "1.0.1",
     "content_scripts": [
         {
             "matches": [
                 "https://*.force.com/*"
             ],
+            "all_frames": true,
             "js": ["script.js"]
         }
     ]
