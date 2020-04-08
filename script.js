@@ -22,23 +22,12 @@ function table_csv(t) {
         }
         x[i] = r.join(',')
     })
-    x.pop()  // Get rid of the final row containing the button
     return x.join('\n')
 }
 
-function go(e) {
-    let t = e.target.closest('table')
-    let b = document.createElement('a')
-    b.setAttribute('download', 'export.csv')
-    b.href = `data:text/csv,${encodeURIComponent(table_csv(t))}`
-    b.innerHTML = 'Download'
-    t.querySelector('tr:last-of-type button').remove()
-    t.querySelector('tr:last-of-type td').appendChild(b)
-}
-
 document.querySelectorAll('table tbody').forEach((t) => {
+    let href = `data:text/csv,${encodeURIComponent(table_csv(t))}`
     t.insertAdjacentHTML('beforeend', `
-        <tr><td><button>Exporteer</button></td></tr>
+        <tr><td><a href="${href}" download="export.csv">Download</a></td></tr>
     `)
-    t.querySelector('tr:last-of-type > td > button').addEventListener('click', go)
 })
