@@ -28,7 +28,18 @@ function go() {
             slds.remove()
         })
         let href = `data:text/csv,${encodeURIComponent(table_csv(t))}`
-        t.querySelector('th:first-of-type').innerHTML = `<a href="${href}" download="export.csv">👽</a>`
+        t.querySelector('th:first-of-type').innerHTML = `<a href="${href}" download="export.csv" class="salesforceexport">💾</a>`
+        document.head.insertAdjacentHTML('beforeend', `
+            <style>
+                .salesforceexport, .salesforceexport:hover {
+                    line-height: 2rem !important;
+                    padding-left: .4rem !important;
+                    font-size: 1.4rem !important;
+                    cursor: pointer !important;
+                    text-decoration: none !important;
+                }
+            </style>
+        `)
     })
 }
 
