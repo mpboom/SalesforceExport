@@ -11,23 +11,25 @@ function table_csv(t) {
     t.querySelectorAll('tr').forEach((r) => {
         let y = []
         r.querySelectorAll('td, th').forEach((c) => {
-            y.push(parse(c.textContent))
+            y.push(parse(c.textContent.trim()))
         })
         x.push(y)
     })
-    let l = x[0].length
     x.forEach((r, i) => {
-        if (!(r.length === l)) {
-            r.unshift('')
-        }
+        r.shift()
         x[i] = r.join(',')
     })
     return x.join('\n')
 }
 
-document.querySelectorAll('table tbody').forEach((t) => {
-    let href = `data:text/csv,${encodeURIComponent(table_csv(t))}`
-    t.insertAdjacentHTML('beforeend', `
-        <tr><td><a href="${href}" download="export.csv">Download</a></td></tr>
-    `)
-})
+function go() {
+    document.querySelectorAll('table tbody').forEach((t) => {
+        t.querySelectorAll('button.slds-button').forEach((slds) => {
+            slds.remove()
+        })
+        let href = `data:text/csv,${encodeURIComponent(table_csv(t))}`
+        t.querySelector('th:first-of-type').innerHTML = `<a href="${href}" download="export.csv">👽</a>`
+    })
+}
+
+setTimeout(go, 3000)
