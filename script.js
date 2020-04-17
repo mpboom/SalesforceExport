@@ -11,7 +11,12 @@ function table_csv(t) {
     t.querySelectorAll('tr').forEach((r) => {
         let y = []
         r.querySelectorAll('td, th').forEach((c) => {
-            y.push(parse(c.textContent.trim()))
+            let sandbox = document.createElement('x')
+            sandbox.innerHTML = c.innerHTML
+            sandbox.querySelectorAll('button').forEach((b) => {
+                b.remove()
+            })
+            y.push(parse(sandbox.textContent.trim()))
         })
         x.push(y)
     })
@@ -24,9 +29,6 @@ function table_csv(t) {
 
 function go() {
     document.querySelectorAll('table tbody').forEach((t) => {
-        t.querySelectorAll('button.slds-button').forEach((slds) => {
-            slds.remove()
-        })
         let href = `data:text/csv,${encodeURIComponent(table_csv(t))}`
         t.querySelector('th:first-of-type').innerHTML = `<a href="${href}" download="export.csv" class="salesforceexport">💾</a>`
         document.head.insertAdjacentHTML('beforeend', `
